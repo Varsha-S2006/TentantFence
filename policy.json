@@ -1,0 +1,268 @@
+{
+  "project": "TenantFence",
+  "description": "Cross-Tenant API Authorization Testing",
+  "target_url": "http://127.0.0.1:8001",
+  "secure_target_url": "http://127.0.0.1:8002",
+  "endpoint": "/invoices/{invoice_id}",
+  "policy_version": 3,
+  "rules": {
+    "same_tenant": "allow",
+    "same_tenant_admin": "allow",
+    "cross_tenant": "deny",
+    "tenant_mutation": "deny",
+    "viewer_write": "deny"
+  },
+  "tenants": [
+    {
+      "tenant_id": "tenant_A",
+      "name": "Company A",
+      "industry": "Technology"
+    },
+    {
+      "tenant_id": "tenant_B",
+      "name": "Company B",
+      "industry": "Finance"
+    },
+    {
+      "tenant_id": "tenant_C",
+      "name": "Company C",
+      "industry": "Healthcare"
+    }
+  ],
+  "principals": [
+    {
+      "user_id": "alice",
+      "name": "Alice",
+      "tenant_id": "tenant_A",
+      "role": "admin"
+    },
+    {
+      "user_id": "bob",
+      "name": "Bob",
+      "tenant_id": "tenant_B",
+      "role": "employee"
+    },
+    {
+      "user_id": "charlie",
+      "name": "Charlie",
+      "tenant_id": "tenant_C",
+      "role": "viewer"
+    },
+    {
+      "user_id": "u_test_1",
+      "name": "User Test",
+      "email": "u_test_1@tenant_A.com",
+      "tenant_id": "tenant_A",
+      "role": "employee",
+      "status": "active"
+    },
+    {
+      "user_id": "sarah_j",
+      "name": "Sarah Jenkins",
+      "email": "sarah.jenkins@companya.com",
+      "tenant_id": "tenant_A",
+      "role": "admin",
+      "status": "active"
+    },
+    {
+      "user_id": "mchen",
+      "name": "Michael Chen",
+      "email": "michael.chen@companya.com",
+      "tenant_id": "tenant_A",
+      "role": "employee",
+      "status": "active"
+    },
+    {
+      "user_id": "emma_w",
+      "name": "Emma Watson",
+      "email": "emma.watson@companyb.com",
+      "tenant_id": "tenant_B",
+      "role": "employee",
+      "status": "active"
+    },
+    {
+      "user_id": "dmiller",
+      "name": "David Miller",
+      "email": "david.miller@companyc.com",
+      "tenant_id": "tenant_C",
+      "role": "viewer",
+      "status": "active"
+    }
+  ],
+  "resources": [
+    {
+      "type": "invoice",
+      "id": "101",
+      "tenant_id": "tenant_A",
+      "sensitivity": "high",
+      "canary": "CANARY-A-101-a7d1",
+      "data": {
+        "customer": "Alice",
+        "amount": 5000,
+        "description": "Company A synthetic invoice"
+      }
+    },
+    {
+      "type": "invoice",
+      "id": "102",
+      "tenant_id": "tenant_B",
+      "sensitivity": "high",
+      "canary": "CANARY-B-102-x9f3",
+      "data": {
+        "customer": "Bob",
+        "amount": 12000,
+        "description": "Company B synthetic invoice"
+      }
+    },
+    {
+      "type": "invoice",
+      "id": "103",
+      "tenant_id": "tenant_C",
+      "sensitivity": "high",
+      "canary": "CANARY-C-103-c4p8",
+      "data": {
+        "customer": "Charlie",
+        "amount": 7300,
+        "description": "Company C synthetic invoice"
+      }
+    },
+    {
+      "type": "project",
+      "id": "201",
+      "tenant_id": "tenant_A",
+      "sensitivity": "medium",
+      "canary": "CANARY-A-PROJ-201-n4q2",
+      "data": {
+        "name": "Atlas migration",
+        "status": "in_progress"
+      }
+    },
+    {
+      "type": "project",
+      "id": "202",
+      "tenant_id": "tenant_B",
+      "sensitivity": "medium",
+      "canary": "CANARY-B-PROJ-202-v8c1",
+      "data": {
+        "name": "Beacon launch",
+        "status": "planning"
+      }
+    },
+    {
+      "type": "project",
+      "id": "203",
+      "tenant_id": "tenant_C",
+      "sensitivity": "medium",
+      "canary": "CANARY-C-PROJ-203-q2m7",
+      "data": {
+        "name": "Cedar rollout",
+        "status": "active"
+      }
+    },
+    {
+      "type": "document",
+      "id": "doc-A-1",
+      "tenant_id": "tenant_A",
+      "sensitivity": "high",
+      "canary": "CANARY-A-DOC-1-f3s8",
+      "data": {
+        "name": "Company A strategy",
+        "content": "Synthetic Company A confidential planning document"
+      }
+    },
+    {
+      "type": "document",
+      "id": "doc-B-1",
+      "tenant_id": "tenant_B",
+      "sensitivity": "high",
+      "canary": "CANARY-B-DOC-1-b6n2",
+      "data": {
+        "name": "Company B ledger",
+        "content": "Synthetic Company B confidential finance document"
+      }
+    },
+    {
+      "type": "document",
+      "id": "doc-C-1",
+      "tenant_id": "tenant_C",
+      "sensitivity": "high",
+      "canary": "CANARY-C-DOC-1-h8k5",
+      "data": {
+        "name": "Company C protocol",
+        "content": "Synthetic Company C confidential healthcare document"
+      }
+    },
+    {
+      "type": "record",
+      "id": "rec-A-1",
+      "tenant_id": "tenant_A",
+      "sensitivity": "medium",
+      "canary": "CANARY-A-REC-1-r4d9",
+      "data": {
+        "label": "Company A customer record",
+        "value": "Synthetic record A-001"
+      }
+    },
+    {
+      "type": "record",
+      "id": "rec-B-1",
+      "tenant_id": "tenant_B",
+      "sensitivity": "medium",
+      "canary": "CANARY-B-REC-1-w5t1",
+      "data": {
+        "label": "Company B customer record",
+        "value": "Synthetic record B-001"
+      }
+    },
+    {
+      "type": "record",
+      "id": "rec-C-1",
+      "tenant_id": "tenant_C",
+      "sensitivity": "medium",
+      "canary": "CANARY-C-REC-1-j2v6",
+      "data": {
+        "label": "Company C customer record",
+        "value": "Synthetic record C-001"
+      }
+    },
+    {
+      "type": "user",
+      "id": "alice",
+      "tenant_id": "tenant_A",
+      "sensitivity": "low",
+      "canary": "CANARY-A-USER-alice-p3d6",
+      "data": {
+        "name": "Alice",
+        "role": "admin"
+      }
+    },
+    {
+      "type": "user",
+      "id": "bob",
+      "tenant_id": "tenant_B",
+      "sensitivity": "low",
+      "canary": "CANARY-B-USER-bob-r5t0",
+      "data": {
+        "name": "Bob",
+        "role": "employee"
+      }
+    },
+    {
+      "type": "user",
+      "id": "charlie",
+      "tenant_id": "tenant_C",
+      "sensitivity": "low",
+      "canary": "CANARY-C-USER-charlie-z1h7",
+      "data": {
+        "name": "Charlie",
+        "role": "viewer"
+      }
+    }
+  ],
+  "actions": [
+    "GET",
+    "PUT",
+    "DELETE",
+    "PATCH"
+  ]
+}
